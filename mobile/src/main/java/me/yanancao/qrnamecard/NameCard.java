@@ -16,6 +16,12 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
+import ezvcard.VCardVersion;
+import ezvcard.property.StructuredName;
+import ezvcard.property.Telephone;
+
 
 public class NameCard extends ActionBarActivity {
 
@@ -33,8 +39,19 @@ public class NameCard extends ActionBarActivity {
         Log.d(TAG,emailTextField.getText().toString());
         Log.d(TAG,phoneNumberTextField.getText().toString());
 
+        VCard card = new VCard();
 
-        String qr_input = firstNameTextField.getText().toString();
+        StructuredName n = new StructuredName();
+        n.setFamily(lastNameTextField.getText().toString());
+        n.setGiven(firstNameTextField.getText().toString());
+
+        card.setStructuredName(n);
+        card.addEmail(emailTextField.getText().toString());
+
+        Telephone tele = new Telephone(phoneNumberTextField.getText().toString());
+        card.addTelephoneNumber(tele);
+
+        String qr_input = Ezvcard.write(card).version(VCardVersion.V4_0).go();
         QRCodeWriter writer = new QRCodeWriter();
         try{
             BitMatrix codeBitMatrix = writer.encode(qr_input, BarcodeFormat.QR_CODE, 800, 800);
