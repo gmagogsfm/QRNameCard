@@ -24,4 +24,8 @@ dependencies {
     wearApp project(':wear')
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.google.android.gms:play-services:7.0.0'
+    compile files('libs/jackson-core-2.3.3.jar')
+    compile files('libs/freemarker-2.3.20.jar')
+    compile files('libs/jsoup-1.7.3.jar')
+    compile files('libs/ez-vcard-0.9.6.jar')
 }
